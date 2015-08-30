@@ -31,6 +31,7 @@
 
 int configblockInit(void);
 bool configblockTest(void);
+bool vl6180xblockTest(void);
 
 /* Static accessors */
 int configblockGetRadioChannel(void);
