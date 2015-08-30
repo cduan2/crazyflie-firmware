@@ -43,6 +43,8 @@
 #include "param.h"
 #include "debug.h"
 #include "sitaw.h"
+#include "vl6180x.h"
+
 #ifdef PLATFORM_CF1
   #include "ms5611.h"
 #else
@@ -98,6 +100,7 @@ static float vSpeedAcc = 0.0; // Vertical speed (world frame) integrated from ve
 static float vSpeed    = 0.0; // Vertical speed (world frame) integrated from vertical acceleration
 static float altHoldPIDVal;   // Output of the PID controller
 static float altHoldErr;      // Different between target and current altitude
+static float VL6180xDistance;
 
 // Altitude hold & Baro Params
 static float altHoldKp              = 0.5;  // PID gain constants, used everytime we reinitialise the PID controller
@@ -622,6 +625,15 @@ static float deadband(float value, const float threshold)
   }
   return value;
 }
+
+void loop()
+{
+	VL6180xDistance = vl6180xgetDistance();
+}
+
+LOG_GROUP_START(Distance)
+LOG_ADD(LOG_FLOAT, Distancemm, &VL6180xDistance)
+LOG_GROUP_STOP(Distance)
 
 LOG_GROUP_START(stabilizer)
 LOG_ADD(LOG_FLOAT, roll, &eulerRollActual)
