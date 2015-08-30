@@ -35,7 +35,7 @@
 #include "i2cdev.h"
 #include "configblock.h"
 #include "eeprom.h"
-
+#include "vl6180x.h"
 
 /* Internal format of the config block */
 #define MAGIC 0x43427830
@@ -195,6 +195,11 @@ int configblockInit(void)
 bool configblockTest(void)
 {
   return eepromTest();
+}
+
+bool vl6180xblockTest(void)
+{
+	return vl6180xTest();
 }
 
 static bool configblockCheckMagic(configblock_t *configblock)
