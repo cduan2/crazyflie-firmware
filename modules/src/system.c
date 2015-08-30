@@ -55,6 +55,8 @@
 #include "usb.h"
 #include "mem.h"
 #include "proximity.h"
+#include "i2cdev.h"
+#include "vl6180x.h"
 
 #ifdef PLATFORM_CF2
 #include "deck.h"
@@ -143,6 +145,7 @@ void systemTask(void *arg)
 
   //Init the high-levels modules
   systemInit();
+  vl6180xInit(I2C1_DEV);
 
 #ifndef USE_RADIOLINK_CRTP
 #ifdef UART_OUTPUT_TRACE_DATA
@@ -171,6 +174,7 @@ void systemTask(void *arg)
   pass &= commTest();
   pass &= commanderTest();
   pass &= stabilizerTest();
+  pass &= vl6180xblockTest();
 #ifdef PLATFORM_CF2
   pass &= deckTest();
 #endif
